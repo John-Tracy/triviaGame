@@ -1,0 +1,37 @@
+#theTime {
+
+	text-align: center;
+	
+
+}
+
+
+h1 {
+	text-align: center;
+}
+
+
+
+.gameArea {
+	background-color: transparent;
+	width: 100%;
+	height: auto;
+	opacity: 0.4;
+	border: 5px solid gray;
+
+}
+#quesHolder, .ansHolder {
+	background-color: white;
+
+}
+
+#quesHolder {
+	height: auto;
+	text-align: center;
+	
+}
+
+.ansHolder {
+	height: auto;
+	border: 1px dashed blue;
+}
