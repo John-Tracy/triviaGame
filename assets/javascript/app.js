@@ -3,20 +3,35 @@ var game = {
 	timerNum: 30,
 	qArray : [
 
-	{question : "placeholder text 1",
-		answers : ["ans1","ans2","ans3","ans4"] },
+	{question : "Which has the proper JavaScript syntax for creating an \"on click\" function?",
+		answers : ["$(\"#id\").on(\"click\", function(){...});",
+					"$(onclick){...}",
+					"$(\'#id\").on(\"click\", function(){...});",
+					"$(\"#id\").on(\"click\", function(){...})" ] },
 
 	{question : "placeholder text 2",
-		answers : ["","","",""]},
+		answers : ["dsljfldsj",
+					"blah blah",
+					"kkkkkkkkkkk",
+					"dddddddd"]},
 
 	{question : "placeholder text 3",
-		answers : ["","","",""]},
+		answers : ["fffff",
+					"dsase",
+					"mdjfjub",
+					"dalk;jiog"]},
 
 	{question:	"placeholder text 4",
-		answers : ["","","",""]},
+		answers : ["ddddddddd",
+					"eeeeeeee",
+					"aseevsr",
+					"ekib;one"]},
 
 	{question : "placeholder text 5",
-		answers : ["","","",""]}
+		answers : ["helloo",
+					"bbbb",
+					"ccc",
+					"dddddddd"]}
 
 		],
 
@@ -26,16 +41,38 @@ var game = {
 	},
 	timeStop: function(){
 		clearInterval(time);
+		$('#theTime').empty();
+		game.timerNum = 30;
+		game.gamePlay(1);
 	},
 	timeCount: function(){
 		game.timerNum--;
 		$('#theTime').html(game.timerNum);
 		if(game.timerNum == 0){
 			game.timeStop();
-		}
-	}
+			// calls function that shows times up, and displays correct answer. then resets browers with new Q and A.
 
+
+		}
+	},
+	gamePlay: function(i){
+	// displays question
+	$('#quesHolderp').html(game.qArray[i].question);
+	// css for answer blocks and question block
+	$('.ansHolder').css('border', '1px dashed blue');
+	$('.ansHolder').css('margin', '5%');
+	$('.ansHolder').css('padding', '5%');
+	$('.quesHolderp').css('padding\-top', '5%');
+	// displays answers
+	$('#box1').html(game.qArray[i].answers[0]);
+	$('#box2').html(game.qArray[i].answers[1]);
+	$('#box3').html(game.qArray[i].answers[2]);
+	$('#box4').html(game.qArray[i].answers[3]);
+	// starts timer.
+	game.timeStart();
 }
+
+};
 
 
 
@@ -43,22 +80,29 @@ var game = {
 
 $(document).ready(function() {
 
+
 $('#startGame').on('click', function(){
-	// displays question
-	$('#quesHolder').html(game.qArray[0].question);
-	// displays answers
-	$('#box1').html(game.qArray[0].answers[0]);
-	$('#box2').html(game.qArray[0].answers[1]);
-	$('#box3').html(game.qArray[0].answers[2]);
-	$('#box4').html(game.qArray[0].answers[3]);
-	// starts timer.
-	game.timeStart();
+
+
+	game.gamePlay(0);
+	
 
 
 
 
 
-
-})
 
 });
+
+});
+
+
+
+
+
+
+
+
+
+
+

@@ -30,8 +30,12 @@ h1 {
 	text-align: center;
 	
 }
+#quesHolderp {
+	font-size: 20px;
+}
 
 .ansHolder {
 	height: auto;
-	border: 1px dashed blue;
+
+
 }
