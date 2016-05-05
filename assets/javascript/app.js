@@ -1,6 +1,9 @@
 var game = { 
+	questionCounter: 0,
 	time: 0,
 	timerNum: 30,
+	rights: 0,
+	wrongs: 0,
 	qArray : [
 
 	{question : "Which has the proper JavaScript syntax for creating an \"on click\" function?",
@@ -12,23 +15,23 @@ var game = {
 	{question : "placeholder text 2",
 		answers : ["dsljfldsj",
 					"blah blah",
-					"kkkkkkkkkkk",
+					"right answer",
 					"dddddddd"]},
 
 	{question : "placeholder text 3",
 		answers : ["fffff",
 					"dsase",
 					"mdjfjub",
-					"dalk;jiog"]},
+					"right answer"]},
 
 	{question:	"placeholder text 4",
 		answers : ["ddddddddd",
-					"eeeeeeee",
+					"right answer",
 					"aseevsr",
 					"ekib;one"]},
 
 	{question : "placeholder text 5",
-		answers : ["helloo",
+		answers : ["rightanswer",
 					"bbbb",
 					"ccc",
 					"dddddddd"]}
@@ -41,18 +44,19 @@ var game = {
 	},
 	timeStop: function(){
 		clearInterval(time);
-		$('#theTime').empty();
-		game.timerNum = 30;
-		game.gamePlay(1);
+		return;
 	},
 	timeCount: function(){
 		game.timerNum--;
 		$('#theTime').html(game.timerNum);
+
 		if(game.timerNum == 0){
+			game.wrongs++;
+			game.timerNum= 30;
+			$('#theTime').empty();
 			game.timeStop();
+			game.gamePlay(game.questionCounter)
 			// calls function that shows times up, and displays correct answer. then resets browers with new Q and A.
-
-
 		}
 	},
 	gamePlay: function(i){
@@ -74,19 +78,73 @@ var game = {
 
 };
 
-
-
-
-
 $(document).ready(function() {
 
 
 $('#startGame').on('click', function(){
 
 
-	game.gamePlay(0);
+	game.gamePlay(game.questionCounter);
 	
+	$('.ansHolder').on('click', function(){
+		var index = $(this).data('index');
+		console.log(index);
+		if(index == 0 && game.questionCounter == 0){
+			game.rights++;
+			game.questionCounter++;
+			alert('You are correct!');
+			console.log(game.rights);
+			console.log(game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
+		else if(index == 2 && game.questionCounter == 1){
+			game.rights++;
+			game.questionCounter++;
+			alert('You are correct!');
+			console.log('rights ' + game.rights);
+			console.log('wrongs' + game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
+		else if(index == 3 && game.questionCounter == 2){
+			game.rights++;
+			game.questionCounter++;
+			alert('You are correct!');
+			console.log(game.rights);
+			console.log(game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
+		else if(index == 1 && game.questionCounter == 3){
+			game.rights++;
+			game.questionCounter++;
+			alert('You are correct!');
+			console.log(game.rights);
+			console.log(game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
+		else if(index == 0 && game.questionCounter == 4){
+			game.rights++;
+			game.questionCounter++;
+			alert('You are correct!');
+			console.log(game.rights);
+			console.log(game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
+		else {
+			game.wrongs++;
+			game.questionCounter++;
+			alert('You are Incorrect!');
+			console.log(game.rights);
+			console.log(game.wrongs);
+			game.timeStop();
+			game.gamePlay(game.questionCounter);
+		}
 
+	});
 
 
 
