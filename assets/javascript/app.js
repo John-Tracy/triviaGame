@@ -52,10 +52,13 @@ var game = {
 
 		if(game.timerNum == 0){
 			game.wrongs++;
-			game.timerNum= 30;
+			game.questionCounter++;
+			game.timerNum = 30;
 			$('#theTime').empty();
 			game.timeStop();
+			alert('You are Incorrect!');
 			game.gamePlay(game.questionCounter)
+			console.log(game.wrongs);
 			// calls function that shows times up, and displays correct answer. then resets browers with new Q and A.
 		}
 	},
@@ -67,6 +70,9 @@ var game = {
 	$('.ansHolder').css('margin', '5%');
 	$('.ansHolder').css('padding', '5%');
 	$('.quesHolderp').css('padding\-top', '5%');
+	// displays correct and incorrect.
+	$('#correct').html('Correct: ' + game.rights);
+	$('#incorrect').html('Incorrect ' + game.wrongs);
 	// displays answers
 	$('#box1').html(game.qArray[i].answers[0]);
 	$('#box2').html(game.qArray[i].answers[1]);
@@ -89,6 +95,7 @@ $('#startGame').on('click', function(){
 	$('.ansHolder').on('click', function(){
 		var index = $(this).data('index');
 		console.log(index);
+	// for all instances of a correct answer
 		if(index == 0 && game.questionCounter == 0){
 			game.rights++;
 			game.questionCounter++;
@@ -134,15 +141,26 @@ $('#startGame').on('click', function(){
 			game.timeStop();
 			game.gamePlay(game.questionCounter);
 		}
-		else {
+	// for incorrect answers
+		else if(game.questionCounter <= 4) {
+			if((index != 0 && game.questionCounter == 4) || (index != 1 && game.questionCounter == 3) || (index != 3 && game.questionCounter == 2) || (index != 2 && game.questionCounter == 1) || (index != 0 && game.questionCounter == 0))
+			{
 			game.wrongs++;
-			game.questionCounter++;
 			alert('You are Incorrect!');
 			console.log(game.rights);
 			console.log(game.wrongs);
 			game.timeStop();
-			game.gamePlay(game.questionCounter);
+
+
+				if(game.questionCounter < 4){
+				game.questionCounter++;
+				game.gamePlay(game.questionCounter);
+				}
+			}
 		}
+	//	for incorrect guess when the game is on the final answer.
+		else if()
+		
 
 	});
 
