@@ -7,43 +7,44 @@ var game = {
 	qArray : [
 
 	{question : "Which has the proper JavaScript syntax for creating an \"on click\" function?",
-		answers : ["$(\"#id\").on(\"click\", function(){...});",
+		answers : [ "$(\"#id\").on(\"click\", function(){...});",
 					"$(onclick){...}",
 					"$(\'#id\").on(\"click\", function(){...});",
 					"$(\"#id\").on(\"click\", function(){...})" ] },
 
-	{question : "placeholder text 2",
-		answers : ["dsljfldsj",
-					"blah blah",
-					"right answer",
-					"dddddddd"]},
+	{question : "What was the first Programming language created?",
+		answers : [ "C++",
+					"PHP",
+					"Plankalkül",
+					"Objective-C"]},
 
-	{question : "placeholder text 3",
-		answers : ["fffff",
-					"dsase",
-					"mdjfjub",
-					"right answer"]},
+	{question : "Which is an example of the \"strictly equals\" operator in JavaScript?",
+		answers : [ "==",
+					"=",
+					"&&&",
+					"==="]},
 
-	{question:	"placeholder text 4",
-		answers : ["ddddddddd",
-					"right answer",
-					"aseevsr",
-					"ekib;one"]},
+	{question:	"What is PHP used for?",
+		answers : [ "client side programming",
+					"Server side programming.",
+					"FaceBook's website only.",
+					"I dont know."]},
 
-	{question : "placeholder text 5",
-		answers : ["rightanswer",
-					"bbbb",
-					"ccc",
-					"dddddddd"]}
+	{question : "what is a recursive function?",
+		answers : [ "A function that calls itself until... it doesn't anymore",
+					"A function that curses.",
+					"A function within a function.",
+					"Nothing."]}
 
 		],
 
 	timeStart: function(){
 		$('#theTime').html(game.timerNum)
-		time = setInterval(game.timeCount,1000);
+		game.time = setInterval(game.timeCount,1000);
 	},
 	timeStop: function(){
-		clearInterval(time);
+		clearInterval(game.time);
+		game.timerNum = 30;
 		return;
 	},
 	timeCount: function(){
@@ -51,14 +52,20 @@ var game = {
 		$('#theTime').html(game.timerNum);
 
 		if(game.timerNum == 0){
+			
+		  if(game.questionCounter < 4){
 			game.wrongs++;
 			game.questionCounter++;
 			game.timerNum = 30;
 			$('#theTime').empty();
 			game.timeStop();
-			alert('You are Incorrect!');
-			game.gamePlay(game.questionCounter)
-			console.log(game.wrongs);
+			alert('You Ran out of time, next question!');
+			game.gamePlay(game.questionCounter);
+		  }
+		  else {
+		  	game.gameOver();
+		  }
+	
 			// calls function that shows times up, and displays correct answer. then resets browers with new Q and A.
 		}
 	},
@@ -80,7 +87,14 @@ var game = {
 	$('#box4').html(game.qArray[i].answers[3]);
 	// starts timer.
 	game.timeStart();
-}
+	},
+	gameOver: function(){
+		$('#quesHolderp').empty();
+		$('.ansHolder').empty();
+		$('.ansHolder').css('border', 'none');
+		$('#correct').html('Correct: ' + game.rights);
+		$('#incorrect').html('Incorrect: ' + game.wrongs);
+	}
 
 };
 
@@ -94,14 +108,11 @@ $('#startGame').on('click', function(){
 	
 	$('.ansHolder').on('click', function(){
 		var index = $(this).data('index');
-		console.log(index);
 	// for all instances of a correct answer
 		if(index == 0 && game.questionCounter == 0){
 			game.rights++;
 			game.questionCounter++;
 			alert('You are correct!');
-			console.log(game.rights);
-			console.log(game.wrongs);
 			game.timeStop();
 			game.gamePlay(game.questionCounter);
 		}
@@ -109,8 +120,6 @@ $('#startGame').on('click', function(){
 			game.rights++;
 			game.questionCounter++;
 			alert('You are correct!');
-			console.log('rights ' + game.rights);
-			console.log('wrongs' + game.wrongs);
 			game.timeStop();
 			game.gamePlay(game.questionCounter);
 		}
@@ -118,8 +127,6 @@ $('#startGame').on('click', function(){
 			game.rights++;
 			game.questionCounter++;
 			alert('You are correct!');
-			console.log(game.rights);
-			console.log(game.wrongs);
 			game.timeStop();
 			game.gamePlay(game.questionCounter);
 		}
@@ -127,42 +134,37 @@ $('#startGame').on('click', function(){
 			game.rights++;
 			game.questionCounter++;
 			alert('You are correct!');
-			console.log(game.rights);
-			console.log(game.wrongs);
 			game.timeStop();
 			game.gamePlay(game.questionCounter);
 		}
 		else if(index == 0 && game.questionCounter == 4){
 			game.rights++;
-			game.questionCounter++;
-			alert('You are correct!');
-			console.log(game.rights);
-			console.log(game.wrongs);
 			game.timeStop();
-			game.gamePlay(game.questionCounter);
+			alert('You are correct, the Game is over!');
+			game.gameOver();
 		}
-	// for incorrect answers
-		else if(game.questionCounter <= 4) {
-			if((index != 0 && game.questionCounter == 4) || (index != 1 && game.questionCounter == 3) || (index != 3 && game.questionCounter == 2) || (index != 2 && game.questionCounter == 1) || (index != 0 && game.questionCounter == 0))
+	// for incorrect answers before last question.
+		else if(game.questionCounter < 4) {
+			if((index != 1 && game.questionCounter == 3) || (index != 3 && game.questionCounter == 2) || (index != 2 && game.questionCounter == 1) || (index != 0 && game.questionCounter == 0))
 			{
 			game.wrongs++;
+			game.questionCounter++;
 			alert('You are Incorrect!');
-			console.log(game.rights);
-			console.log(game.wrongs);
 			game.timeStop();
-
-
-				if(game.questionCounter < 4){
-				game.questionCounter++;
-				game.gamePlay(game.questionCounter);
-				}
+			game.gamePlay(game.questionCounter);
 			}
 		}
 	//	for incorrect guess when the game is on the final answer.
-		else if()
-		
+		else if(index != 0 && game.questionCounter == 4){
+			game.timeStop();
+			game.wrongs++;
+			alert('You are Incorrect, Game Over!');
+			game.gameOver();
+		}
+			
 
 	});
+		
 
 
 
